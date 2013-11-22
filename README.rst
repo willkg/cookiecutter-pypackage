@@ -35,15 +35,7 @@ Generate a Python package project::
     cookiecutter https://github.com/willkg/cookiecutter-pypackage.git
 
 
-After that do this::
-
-    git init
-    git commit -m "Initial empty commit" --allow-empty
-    git add .
-    git commit -m "Initial code commit"
-
-
-Then:
+After doing that:
 
 * Add the repo to your Travis CI account.
 * Add the repo to your ReadTheDocs account + turn on the ReadTheDocs service
