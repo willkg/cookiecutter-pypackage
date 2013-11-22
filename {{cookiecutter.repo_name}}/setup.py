@@ -2,39 +2,42 @@
 # -*- coding: utf-8 -*-
 
 import os
+import re
 import sys
+from setuptools import setup, find_packages
 
-
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
 
 if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
     sys.exit()
 
+
 readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
+
+def get_version():
+    VERSIONFILE = os.path.join('{{ cookiecutter.module }}', '__init__.py')
+    VSRE = r"""^__version__ = ['"]([^'"]*)['"]"""
+    version_file = open(VERSIONFILE, 'rt').read()
+    return re.search(VSRE, version_file, re.M).group(1)
+
+
 setup(
     name='{{ cookiecutter.repo_name }}',
-    version='{{ cookiecutter.version }}',
+    version=get_version(),
     description='{{ cookiecutter.project_short_description }}',
     long_description=readme + '\n\n' + history,
     author='{{ cookiecutter.full_name }}',
     author_email='{{ cookiecutter.email }}',
     url='https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_name }}',
-    packages=[
-        '{{ cookiecutter.repo_name }}',
-    ],
-    package_dir={'{{ cookiecutter.repo_name }}': '{{ cookiecutter.repo_name }}'},
+    packages=find_packages(),
     include_package_data=True,
     install_requires=[
     ],
     license="BSD",
-    zip_safe=False,
-    keywords='{{ cookiecutter.repo_name }}',
+    zip_safe=True,
+    keywords='',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
